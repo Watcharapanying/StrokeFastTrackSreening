@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">    
+    <title>SWD BEFAST - Stroke Screening Application</title>
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" sizes="512x512" href="logo stroke.png">
+    <link class="icon" type="image/png" sizes="32x32" href="logo stroke.png">
+    <link class="icon" type="image/png" sizes="16x16" href="logo stroke.png">
+
+    <!-- Progressive Web App Meta -->
+    <meta name="apple-mobile-web-app-title" content="SWD BEFAST">
+    <meta name="application-name" content="SWD BEFAST">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#E11D48">
+    
+    <!-- Tailwind CSS (v4 compatible via standard script or v3) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Prompt) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background: #F9FAFB;
+        }
+        .page { display: none; }
+        .page.active { display: flex; }
+        
+        /* Custom UI Enhancements for Modern Mobile App Feel */
+        .app-container {
+            box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.08);
+            border: 1px solid rgba(243, 244, 246, 1);
+        }
+        
+        /* Smooth transitions */
+        .fade-in {
+            animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom Form Input States */
+        .modern-input:focus {
+            border-color: #E11D48;
+            box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center sm:p-4 antialiased">
+
+    <!-- Main Container simulating a smartphone wrapper -->
+    <div class="w-full max-w-md bg-white sm:rounded-[40px] app-container min-h-screen sm:min-h-[840px] flex flex-col justify-between overflow-hidden relative p-6 pb-8 pt-6">  
+      
+        <!-- ================= PAGE 1: HOME ================= -->
+        <div id="page1" class="page active flex-col justify-between h-full flex-1 fade-in">
+            <div class="my-auto text-center space-y-8 py-6">
+                <!-- Branding Icon wrapper -->
+                <div class="relative inline-flex items-center justify-center">
+                    <div class="absolute inset-0 bg-rose-100 rounded-[32px] scale-110 blur-xl opacity-60 animate-pulse"></div>
+                    <div class="relative p-6 bg-gradient-to-br from-rose-500 to-red-600 text-white rounded-[28px] shadow-xl shadow-rose-200">
+                        <svg xmlns="http://www.w3.org/2000/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-14 h-14">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="space-y-3 px-2">
+                    <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 leading-tight">
+                        แอปพลิเคชันคัดกรอง<br>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-red-600">อาการโรคหลอดเลือดสมอง</span>
+                    </h1>
+                    <p class="text-sm text-gray-400 font-normal tracking-wide">ประเมินอาการด่วนเบื้องต้นตามหลักมาตรฐาน BE FAST</p>
+                </div>
+
+                <!-- Action Button Cards -->
+                <div class="w-full space-y-4 pt-4 px-2">
+                    <button onclick="navigateTo(2)" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg shadow-rose-200 transition-all text-lg active:scale-[0.98] cursor-pointer">
+                        เริ่มทำการประเมินอาการ
+                    </button>
+                    
+                    <a href="tel:0817080138" class="w-full flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200/80 font-medium py-4 px-6 rounded-2xl transition-all text-base active:scale-[0.98]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-5 h-5 mr-2 text-rose-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.824-1.802-5.176-4.154-6.978-6.978l1.293-.97.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                        </svg>
+                        โทรประสาน รพร. สว่างฯ
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Beautiful subtle footer credit -->
+            <div class="text-xs text-gray-400 font-normal pt-4 border-t border-gray-100/80 text-center w-full mt-auto">
+                พัฒนาโดย <span class="text-gray-600 font-medium">นางสาววัชราพรรณ ตันเสนา</span> นักฉุกเฉินการแพทย์
+            </div>
+        </div>
+
+        <!-- ================= PAGES 2 - 6: BE FAST ASSESSMENT ================= -->
+        <!-- Template UI for BE FAST Steps with uniform gorgeous layouts -->
+        
+        <!-- หน้า 2: B -->
+        <div id="page2" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-5">
+                <div class="flex items-center justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">STEP 1 OF 5</span>
+                    <span class="text-xs font-medium text-gray-400">หมวด B</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900 text-center">ผู้ป่วยมีอาการเหล่านี้หรือไม่?</h2>
+                    
+                    <div class="bg-gradient-to-b from-rose-50/70 to-rose-50/20 rounded-3xl p-5 border border-rose-100/70 flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl font-black text-rose-500 mb-3 border border-rose-100">B</div>
+                        <div class="text-lg font-extrabold text-red-600 mb-2">Balance (การทรงตัว)</div>
+                        
+                        <div class="w-32 h-32 relative rounded-2xl overflow-hidden mb-4 bg-white p-1 border border-rose-100/60 shadow-inner">
+                            <img src="balance.jpg" alt="Balance" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <p class="text-gray-800 text-lg font-semibold leading-relaxed px-2">เวียนศีรษะ เดินเซ มีอาการเดินไม่ตรง <p>หรือสูญเสียการทรงตัวลำบากแบบทันทีทันใด</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 pt-2" id="options-p2"></div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(1)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> หน้าแรก
+                </button>
+                <button onclick="navigateTo(3)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ถัดไป <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- หน้า 3: E -->
+        <div id="page3" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-5">
+                <div class="flex items-center justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">STEP 2 OF 5</span>
+                    <span class="text-xs font-medium text-gray-400">หมวด E</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900 text-center">ผู้ป่วยมีอาการเหล่านี้หรือไม่?</h2>
+                    
+                    <div class="bg-gradient-to-b from-rose-50/70 to-rose-50/20 rounded-3xl p-5 border border-rose-100/70 flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl font-black text-rose-500 mb-3 border border-rose-100">E</div>
+                        <div class="text-lg font-extrabold text-red-600 mb-2">Eyes (การมองเห็น)</div>
+                        
+                        <div class="w-32 h-32 relative rounded-2xl overflow-hidden mb-4 bg-white p-1 border border-rose-100/60 shadow-inner">
+                            <img src="eyes.jpg" alt="Eyes" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <p class="text-gray-800 text-lg font-semibold leading-relaxed px-2">ตามัว มองเห็นไม่ชัด เห็นภาพซ้อน</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 pt-2" id="options-p3"></div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(2)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <button onclick="navigateTo(4)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ถัดไป <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- หน้า 4: F -->
+        <div id="page4" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-5">
+                <div class="flex items-center justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">STEP 3 OF 5</span>
+                    <span class="text-xs font-medium text-gray-400">หมวด F</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900 text-center">ผู้ป่วยมีอาการเหล่านี้หรือไม่?</h2>
+                    
+                    <div class="bg-gradient-to-b from-rose-50/70 to-rose-50/20 rounded-3xl p-5 border border-rose-100/70 flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl font-black text-rose-500 mb-3 border border-rose-100">F</div>
+                        <div class="text-lg font-extrabold text-red-600 mb-2">Face (ใบหน้า)</div>
+                        
+                        <div class="w-32 h-32 relative rounded-2xl overflow-hidden mb-4 bg-white p-1 border border-rose-100/60 shadow-inner">
+                            <img src="Face.jpg" alt="Face" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <p class="text-gray-800 text-lg font-semibold leading-relaxed px-2">ปากเบี้ยว หน้าเบี้ยวข้างใดข้างหนึ่ง <p>ยิ้มแล้วมุมปากตก หรือชากล้ามเนื้อใบหน้า</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 pt-2" id="options-p4"></div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(3)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <button onclick="navigateTo(5)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ถัดไป <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- หน้า 5: A -->
+        <div id="page5" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-5">
+                <div class="flex items-center justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">STEP 4 OF 5</span>
+                    <span class="text-xs font-medium text-gray-400">หมวด A</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900 text-center">ผู้ป่วยมีอาการเหล่านี้หรือไม่?</h2>
+                    
+                    <div class="bg-gradient-to-b from-rose-50/70 to-rose-50/20 rounded-3xl p-5 border border-rose-100/70 flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl font-black text-rose-500 mb-3 border border-rose-100">A</div>
+                        <div class="text-lg font-extrabold text-red-600 mb-2">Arm (กำลังแขนและขา)</div>
+                        
+                        <div class="w-32 h-32 relative rounded-2xl overflow-hidden mb-4 bg-white p-1 border border-rose-100/60 shadow-inner">
+                            <img src="arm.jpg" alt="Arm" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <p class="text-gray-800 text-lg font-semibold leading-relaxed px-2">แขนขาอ่อนแรงข้างใดข้างหนึ่ง หรือชาครึ่งซีก</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 pt-2" id="options-p5"></div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(4)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <button onclick="navigateTo(6)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ถัดไป <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- หน้า 6: S -->
+        <div id="page6" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-5">
+                <div class="flex items-center justify-between items-center border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">STEP 5 OF 5</span>
+                    <span class="text-xs font-medium text-gray-400">หมวด S</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900 text-center">ผู้ป่วยมีอาการเหล่านี้หรือไม่?</h2>
+                    
+                    <div class="bg-gradient-to-b from-rose-50/70 to-rose-50/20 rounded-3xl p-5 border border-rose-100/70 flex flex-col items-center text-center w-full">
+                        <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl font-black text-rose-500 mb-3 border border-rose-100">S</div>
+                        <div class="text-lg font-extrabold text-red-600 mb-2">Speech (การสื่อสาร)</div>
+                        
+                        <div class="w-32 h-32 relative rounded-2xl overflow-hidden mb-4 bg-white p-1 border border-rose-100/60 shadow-inner">
+                            <img src="speech.jpg" alt="Speech" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <div class="text-gray-800 text-lg font-semibold leading-relaxed text-left w-full px-4 space-y-1">
+                            <div class="flex items-start"><span class="text-rose-500 mr-2">•</span> พูดไม่ชัด</div>
+                            <div class="flex items-start"><span class="text-rose-500 mr-2">•</span> เสียงเปลี่ยน ลิ้นแข็ง</div>
+                            <div class="flex items-start"><span class="text-rose-500 mr-2">•</span> พูดไม่รู้เรื่อง</div>
+                            <div class="flex items-start"><span class="text-rose-500 mr-2">•</span> พูดไม่ออกทันทีทันใด</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 pt-2" id="options-p6"></div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(5)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <button onclick="navigateTo(7)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ถัดไป <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 7: TIME ASSESSMENT ================= -->
+        <div id="page7" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-6 my-auto py-2">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">CRITICAL TIME</span>
+                    <div class="text-6xl font-black text-rose-500 tracking-tight pt-2">T</div>
+                    <h2 class="text-xl font-bold text-gray-900">Time (เวลาที่เริ่มมีอาการล่าสุด)</h2>
+                    <p class="text-xs text-rose-500 font-medium max-w-xs mx-auto">หัวใจสำคัญหลัก: กรุณาระบุเวลาปกติครั้งสุดท้ายที่พบผู้ป่วย เพื่อคำนวณสิทธิ์ Golden Hour</p>
+                </div>
+
+                <!-- Input Box -->
+                <div class="bg-gray-50/80 border border-gray-200/60 rounded-3xl p-5 space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2 text-sm text-center">เวลาที่เห็นผู้ป่วยปกติครั้งสุดท้าย <span class="text-rose-500">*</span></label>
+                        <input type="time" id="lastNormalTime" onchange="calculateDuration()" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-rose-500 text-xl font-bold text-center text-gray-800 shadow-sm transition-all modern-input">
+                    </div>
+
+                    <!-- Computed Smart Dashboard -->
+                    <div id="timeResultBox" class="hidden p-4 rounded-2xl text-center font-medium text-sm transition-all shadow-sm">
+                        <p id="timeResultText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-5 mt-auto border-t border-gray-100">
+                <button onclick="navigateTo(6)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <button onclick="navigateTo(8)" class="bg-gray-900 text-white font-medium text-sm px-5 py-2.5 rounded-xl flex items-center transition-all shadow-sm hover:bg-gray-800 cursor-pointer">
+                    ข้อมูลผู้ป่วย <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 8: PATIENT DATA FORM ================= -->
+        <div id="page8" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="space-y-4">
+                <div class="text-center pb-2 border-b border-gray-100">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Patient Information</span>
+                    <h2 class="text-xl font-bold text-gray-900 mt-1">บันทึกข้อมูลรายละเอียดผู้ป่วย</h2>
+                </div>
+
+                <form id="patientForm" onsubmit="submitForm(event)" class="space-y-3.5 text-sm">
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">ชื่อ - นามสกุล ผู้ป่วย <span class="text-rose-500">*</span></label>
+                        <input type="text" id="name" required class="w-full bg-gray-50/70 border border-gray-200/80 rounded-xl px-4 py-3 focus:outline-none transition-all text-gray-800 modern-input" placeholder="ระบุชื่อ-นามสกุล">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">โรคประจำตัวส่วนตัว</label>
+                        <input type="text" id="disease" class="w-full bg-gray-50/70 border border-gray-200/80 rounded-xl px-4 py-3 focus:outline-none transition-all text-gray-800 modern-input" placeholder="เช่น เบาหวาน, ความดัน (ถ้ามี)">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">หน่วยปฏิบัติการรับเคส <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <select id="unit" required class="w-full bg-gray-50/70 border border-gray-200/80 rounded-xl px-4 py-3 focus:outline-none transition-all text-gray-800 appearance-none modern-input pr-10 cursor-pointer">
+                                <option value="" disabled selected>เลือกหน่วยปฏิบัติการในพื้นที่</option>
+                                <option value="รพร.สว่างแดนดิน">รพร.สว่างแดนดิน</option>
+                                <option value="กู้ภัยสว่างแดนดินธรรมสถาน">กู้ภัยสว่างแดนดินธรรมสถาน</option>
+                                <option value="สมาคมพุทธธรรมสว่างสามัคคี">สมาคมพุทธธรรมสว่างสามัคคี</option>
+                                <option value="ทต.โคกสี">ทต.โคกสี</option>
+                                <option value="อบต.บงเหนือ">อบต.บงเหนือ</option>
+                                <option value="ทต.บงใต้">ทต.บงใต้</option>
+                                <option value="อบต.คำสะอาด">อบต.คำสะอาด</option>
+                                <option value="อบต.แวง">อบต.แวง</option>
+                                <option value="อบต.ค้อใต้">อบต.ค้อใต้</option>
+                                <option value="อบต.ธาตุทอง">อบต.ธาตุทอง</option>
+                                <option value="อบต.ตาลโกน">อบต.ตาลโกน</option>
+                                <option value="ทต.พันนา">ทต.พันนา</option>
+                                <option value="ทต.บ้านต้าย">ทต.บ้านต้าย</option>
+                                <option value="ทต.หนองหลวง">ทต.หนองหลวง</option>
+                                <option value="อบต.โพนสูง">อบต.โพนสูง</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">เบอร์โทรศัพท์ติดต่อญาติ <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="phone" required class="w-full bg-gray-50/70 border border-gray-200/80 rounded-xl px-4 py-3 focus:outline-none transition-all text-gray-800 modern-input" placeholder="ระบุเบอร์โทรศัพท์มือถือ">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">หมายเหตุ / ข้อมูลเพิ่มเติมอื่น ๆ</label>
+                        <textarea id="note" rows="2" class="w-full bg-gray-50/70 border border-gray-200/80 rounded-xl px-4 py-3 focus:outline-none transition-all text-gray-800 resize-none modern-input" placeholder="เช่น รายการยาประจำตัว หรือจุดสังเกตบริเวณบ้าน"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-semibold py-4 px-6 rounded-xl shadow-md transition-all text-base mt-2 active:scale-[0.98] cursor-pointer">
+                        ส่งข้อมูลและดูเบอร์โทรด่วนฉุกเฉิน
+                    </button>
+                </form>
+            </div>
+
+            <div class="flex justify-between items-center pt-4 mt-4 border-t border-gray-100">
+                <button onclick="navigateTo(7)" class="text-gray-400 hover:text-gray-600 font-medium text-sm flex items-center transition-all cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg> ย้อนกลับ
+                </button>
+                <div class="w-16"></div> 
+            </div>
+        </div>
+
+        <!-- ================= PAGE 9: EMERGENCY CALLS ================= -->
+        <div id="page9" class="page flex-col justify-between h-full flex-1 fade-in">
+            <div class="text-center space-y-6 my-auto py-4">
+                
+                <div class="space-y-3">
+                    <div class="inline-flex p-4 bg-emerald-50 text-emerald-500 rounded-full mb-1 relative">
+                        <div class="absolute inset-0 bg-emerald-100 rounded-full scale-120 opacity-40 animate-ping"></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-10 h-10 relative">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-900">บันทึกส่งข้อมูลเรียบร้อย</h2>
+                    <p class="text-sm text-gray-500 px-4">กรุณากดโทรออกปุ่มด้านล่างเพื่อทำการติดต่อสื่อสารและประสานงานสายด่วนแพทย์ทันทีค่ะ</p>
+                </div>
+
+                <!-- Emergency calling grid inspired by modern action sheets -->
+                <div class="space-y-3.5 pt-2 px-1">
+                    <a href="tel:1669" class="w-full flex flex-col items-center justify-center bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold py-4.5 px-6 rounded-2xl shadow-lg shadow-red-200 transition-all text-xl active:scale-[0.98]">
+                        <span class="text-2xl font-extrabold tracking-wide">🚨 โทรสายด่วน 1669</span>
+                        <span class="text-xs font-light opacity-80 mt-0.5">(กดตรงนี้ระบบโทรออกทันที)</span>
+                    </a>
+                    
+                    <a href="tel:0817080138" class="w-full flex flex-col items-center justify-center bg-white border-2 border-rose-500 text-rose-600 hover:bg-rose-50/50 font-bold py-3.5 px-6 rounded-2xl transition-all text-base active:scale-[0.98]">
+                        <span class="font-bold">📞 โทรประสาน รพศ. สว่างฯ</span>
+                        <span class="text-xs font-medium opacity-90 mt-0.5">081-708-0138</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center pt-6 mt-auto border-t border-gray-100">
+                <button onclick="location.reload()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-8 rounded-xl text-sm transition-all active:scale-[0.98] cursor-pointer">
+                    🔄 กลับไปหน้าแรก (เคสถัดไป)
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        const assessmentData = { p2: null, p3: null, p4: null, p5: null, p6: null };
+
+        function navigateTo(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(`page${pageNumber}`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Professional option component styling
+        function renderOptions(pageId) {
+            const container = document.getElementById(`options-${pageId}`);
+            const options = [
+                { text: 'มีอาการเด่นชัด (Yes)', value: 'yes', badge: '✓', baseColor: 'border-gray-200 bg-white text-gray-800', activeColor: 'border-rose-500 bg-rose-50/40 text-rose-600 ring-4 ring-rose-50' },
+                { text: 'ไม่มีอาการ (No)', value: 'no', badge: '✗', baseColor: 'border-gray-200 bg-white text-gray-800', activeColor: 'border-gray-900 bg-gray-50 text-gray-900 ring-4 ring-gray-100' },
+                { text: 'ไม่แน่ใจ (Unclear)', value: 'not-sure', badge: '?', baseColor: 'border-gray-200 bg-white text-gray-800', activeColor: 'border-amber-500 bg-amber-50/40 text-amber-700 ring-4 ring-amber-50' }
+            ];
+
+            options.forEach(opt => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `w-full border-2 ${opt.baseColor} font-semibold py-3.5 px-5 rounded-xl transition-all text-left flex justify-between items-center option-btn active:scale-[0.99] mb-0.5 cursor-pointer`;
+                button.innerHTML = `
+                    <span class="text-sm font-medium tracking-wide">${opt.text}</span>
+                    <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-xs font-bold badge-icon">${opt.badge}</span>
+                `;
+                
+                button.onclick = () => {
+                    container.querySelectorAll('.option-btn').forEach(btn => {
+                        // Reset classes to original base state
+                        btn.className = button.className.replace(/border-.*bg-.*text-.*ring-4\sring-.*?\s/g, '');
+                        btn.classList.add('border-gray-200', 'bg-white', 'text-gray-800');
+                        btn.classList.remove('border-rose-500', 'border-gray-900', 'border-amber-500', 'bg-rose-50/40', 'bg-gray-50', 'bg-amber-50/40', 'text-rose-600', 'text-gray-900', 'text-amber-700', 'ring-4', 'ring-rose-50', 'ring-gray-100', 'ring-amber-50');
+                        
+                        // Reset badges
+                        const b = btn.querySelector('.badge-icon');
+                        b.className = "w-6 h-6 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-xs font-bold badge-icon";
+                    });
+                    
+                    // Apply selected styling state
+                    button.classList.remove('border-gray-200', 'bg-white', 'text-gray-800');
+                    opt.activeColor.split(' ').forEach(cls => button.classList.add(cls));
+                    
+                    // Highlight custom badge icon too
+                    const activeBadge = button.querySelector('.badge-icon');
+                    if(opt.value === 'yes') activeBadge.className = "w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-bold badge-icon";
+                    if(opt.value === 'no') activeBadge.className = "w-6 h-6 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-bold badge-icon";
+                    if(opt.value === 'not-sure') activeBadge.className = "w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold badge-icon";
+                    
+                    assessmentData[pageId] = opt.value;
+                };
+
+                container.appendChild(button);
+            });
+        }
+
+        window.onload = function() {
+            ['p2', 'p3', 'p4', 'p5', 'p6'].forEach(pageId => {
+                renderOptions(pageId);
+            });
+        };
+
+        function calculateDuration() {
+            const timeInput = document.getElementById('lastNormalTime').value;
+            const resultBox = document.getElementById('timeResultBox');
+            const resultText = document.getElementById('timeResultText');
+
+            if (!timeInput) return;
+
+            const now = new Date();
+            const [hours, minutes] = timeInput.split(':');
+            
+            const pickedTime = new Date();
+            pickedTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+            let diffMs = now - pickedTime;
+
+            if (diffMs < 0) {
+                pickedTime.setDate(pickedTime.getDate() - 1);
+                diffMs = now - pickedTime;
+            }
+
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMins / 60);
+            const remainingMins = diffMins % 60;
+
+            resultBox.classList.remove('hidden');
+
+            if (diffMins > 270) { 
+                resultBox.className = "p-4 rounded-2xl text-center font-medium text-sm bg-rose-50 border border-rose-200/60 text-rose-700 fade-in";
+                resultText.innerHTML = `⏳ สังเกตอาการผ่านมาแล้ว: <b>${diffHours} ชม. ${remainingMins} นาที</b><br><span class="text-xs opacity-90 font-bold">⚠️ เกินกำหนดช่วงเวลา 4.5 ชม. (Golden Hour)</span>`;
+            } else { 
+                resultBox.className = "p-4 rounded-2xl text-center font-medium text-sm bg-emerald-50 border border-emerald-200/60 text-emerald-700 fade-in";
+                resultText.innerHTML = `⏱️ สังเกตอาการผ่านมาแล้ว: <b>${diffHours} ชม. ${remainingMins} นาที</b><br><span class="text-xs opacity-90 font-bold">✅ อยู่ในกรอบเวลาวิกฤต 4.5 ชม. เข้าข่าย Stroke Fast Track</span>`;
+            }
+        }
+
+        async function submitForm(event) {
+            event.preventDefault();
+
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="flex items-center justify-center">กำลังนำส่งข้อมูลเข้าระบบหลัก...</span>';
+
+            const name = document.getElementById('name').value;
+            const disease = document.getElementById('disease').value || 'ไม่มี';
+            const unit = document.getElementById('unit').value;
+            const phone = document.getElementById('phone').value;
+            const lastTime = document.getElementById('lastNormalTime').value || 'ไม่ได้ระบุ';
+            const noteElement = document.getElementById('note');
+            const note = noteElement ? noteElement.value || 'ไม่มี' : 'ไม่มี';
+
+            function translateAnswer(answer) {
+                if (answer === 'yes') return 'มี';
+                if (answer === 'no') return 'ไม่มี';
+                if (answer === 'not-sure') return 'ไม่แน่ใจ';
+                return 'ไม่ได้ประเมิน';
+            }
+
+            const formData = new URLSearchParams();
+            formData.append('name', name);
+            formData.append('disease', disease);
+            formData.append('unit', unit);
+            formData.append('phone', phone);
+            formData.append('lastTime', lastTime);
+            formData.append('balance', translateAnswer(assessmentData.p2));
+            formData.append('eyes', translateAnswer(assessmentData.p3));
+            formData.append('face', translateAnswer(assessmentData.p4));
+            formData.append('arm', translateAnswer(assessmentData.p5));
+            formData.append('speech', translateAnswer(assessmentData.p6));
+            formData.append('note', note);
+
+            try {
+                await fetch('https://script.google.com/macros/s/AKfycbwfJ3788STR2sapM-2QLsOQ9-r1OuiElSk8ja785ccVfKJT8Qq_PCA8pfq7jfYiE3LL/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+
+                alert('✅ ระบบได้บันทึกข้อมูลและนำส่งไปยังโรงพยาบาลเรียบร้อยแล้ว');
+                document.getElementById('patientForm').reset();
+                if (document.getElementById('timeResultBox')) document.getElementById('timeResultBox').classList.add('hidden');
+                for (const key in assessmentData) { assessmentData[key] = null; }
+                navigateTo(9);
+
+            } catch (error) {
+                console.error(error);
+                alert('❌ เกิดข้อผิดพลาดในการเชื่อมต่อเครือข่าย กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            }
+        }
+
+        // Anti-double-tap and smooth zoom control for iOS webviews
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) event.preventDefault();
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        document.addEventListener('gesturestart', function (event) { event.preventDefault(); });
+    </script>
+</body>
+</html>
